@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app01.apps.App01Config',
+    'web.apps.WebConfig'
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'web.middleware.auth.AuthMiddleware'
 ]
 
 ROOT_URLCONF = 'TargetRangeWeb.urls'
@@ -129,10 +131,7 @@ TENCENT_SMS_APP_KEY = "777777777777777777777777"
 # 腾讯云短信签名内容
 TENCENT_SMS_SIGN = "黑羽的碎碎碎念"
 
-TENCENT_SMS_TEMPLATE = {
-    'register': 1006416,
-    'login': 1006413
-}
+
 
 
 try:
