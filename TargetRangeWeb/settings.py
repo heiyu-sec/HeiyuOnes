@@ -131,7 +131,16 @@ TENCENT_SMS_APP_KEY = "777777777777777777777777"
 # 腾讯云短信签名内容
 TENCENT_SMS_SIGN = "黑羽的碎碎碎念"
 
-
+#登录白名单：无需登录就能访问的页面
+WHITE_REGEX_URL_LIST = [
+    "/register/",
+    "/send/sms/",
+    "/login/",
+    "/login/sms/",
+    "/image/code/",
+    "/index/",
+    "/price/",
+]
 
 
 try:
