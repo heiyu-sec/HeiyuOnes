@@ -58,52 +58,31 @@
             font-size: 18px;
         }
 
-        .color-radio label {
-            margin-left: 0;
-            padding-left: 0;
-        }
-
-        .color-radio input[type="radio"] {
-            display: none;
-        }
-
-        .color-radio input[type="radio"] + .cycle {
-            display: inline-block;
-            height: 25px;
-            width: 25px;
-            border-radius: 50%;
-            border: 2px solid #dddddd;
-        }
-
-        .color-radio input[type="radio"]:checked + .cycle {
-            border: 2px solid black;
-        }
     </style>
 {% endblock %}
 {% block content %}
     <div class="container-fluid project">
-        <div style="margin: 10px 0;">
-            <a class="btn btn-primary" data-toggle="modal" data-target="#addModal">
-                <i class="fa fa-plus-circle" aria-hidden="true"></i> 新建项目
-            </a>
-        </div>
+        <a class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i> 新建项目
+        </a>
+
         <div class="panel panel-default">
             <div class="panel-heading"><i class="fa fa-star" aria-hidden="true"></i> 星标</div>
             <div class="panel-body">
                 {% for item in project_dict.star %}
                     <div class="item">
-                        <a href="{% url 'dashboard' project_id=item.value.id %}" class="title"
-                           style="background-color: {{ item.value.get_color_display }};">{{ item.value.name }}</a>
+                        <a href="#" class="title"
+                           style="background-color: {{ item.get_color_display }};">{{ item.name }}</a>
                         <div class="info">
                             <div>
-                                <a href="{% url 'project_unstar' project_type=item.type project_id=item.value.id %}">
+                                <a href="#">
                                     <i class="fa fa-star" aria-hidden="true" style="color: #f0ad4e;"></i>
                                 </a>
-                                <span>{{ item.value.creator.username }}</span>
+                                <span>{{ item.creator.username }}</span>
                             </div>
                             <div>
                                 <i class="fa fa-user-o" aria-hidden="true"></i>
-                                <span>{{ item.value.join_count }}</span>
+                                <span>{{ item.join_count }}</span>
                             </div>
                         </div>
                     </div>
@@ -116,11 +95,11 @@
             <div class="panel-body">
                 {% for item in project_dict.my %}
                     <div class="item">
-                        <a href="{% url 'dashboard' project_id=item.id %}" class="title"
+                        <a href="#" class="title"
                            style="background-color: {{ item.get_color_display }};">{{ item.name }}</a>
                         <div class="info">
                             <div>
-                                <a href="{% url 'project_star' project_type='my' project_id=item.id %}">
+                                <a href="#">
                                     <i class="fa fa-star" aria-hidden="true" style="color: #d5d5d5"></i>
                                 </a>
                                 <span>{{ item.creator.username }}</span>
@@ -139,22 +118,7 @@
             <div class="panel-heading"><i class="fa fa-handshake-o" aria-hidden="true"></i> 我参与的</div>
             <div class="panel-body">
                 {% for item in project_dict.join %}
-                    <div class="item">
-                        <a href="{% url 'dashboard' project_id=item.id %}" class="title"
-                           style="background-color: {{ item.get_color_display }};">{{ item.name }}</a>
-                        <div class="info">
-                            <div>
-                                <a href="{% url 'project_star' project_type='join' project_id=item.id %}">
-                                    <i class="fa fa-star" aria-hidden="true" style="color: #d5d5d5"></i>
-                                </a>
-                                <span>{{ item.creator.username }}</span>
-                            </div>
-                            <div>
-                                <i class="fa fa-user-o" aria-hidden="true"></i>
-                                <span>{{ item.join_count }}</span>
-                            </div>
-                        </div>
-                    </div>
+                    <div>{{ item.name }}</div>
                 {% endfor %}
             </div>
         </div>
@@ -180,7 +144,6 @@
                                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                                 {{ field }}
                                 <span class="error-msg"></span>
-
                             </div>
                         {% endfor %}
                     </form>
@@ -201,7 +164,6 @@
         $(function () {
             bindSubmit();
         });
-
 
         function bindSubmit() {
             $('#btnSubmit').click(function () {

@@ -17,5 +17,7 @@ urlpatterns = [
 
     #项目管理
     url(r'^project/list/$', project.project_list, name='project_list'),
+    # /project/star/my/1
+    # /project/star/join/1
 
 ]

@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 # Author:blackfeather
-from django.utils.deprecation import MiddlewareMixin
-from web import models
-from django.shortcuts import redirect
-from django.conf import settings
 import datetime
+from django.shortcuts import redirect
+from django.utils.deprecation import MiddlewareMixin
+from django.conf import settings
+
+from web import models
+
 
 class Tracer(object):
 
@@ -22,9 +24,12 @@ class AuthMiddleware(MiddlewareMixin):
 
         request.tracer = Tracer()
 
-        user_id = request.session.get('user_id', 0)
+        user_id = request.session.get('user_id',0)
+        print('userid='+str(user_id))
+
         user_object = models.UserInfo.objects.filter(id=user_id).first()
         request.tracer.user = user_object
+
 
         # 白名单：没有登录都可以访问的URL
         """
