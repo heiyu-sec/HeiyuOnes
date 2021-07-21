@@ -176,7 +176,7 @@
                     success: function (res) {
                         console.log(res);
                         if (res.status) {
-                            location.href = location.href;
+                            window.location.reload();
                             // location.reload()
                         } else {
                             $.each(res.error, function (key, value) {

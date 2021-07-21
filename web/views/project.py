@@ -29,8 +29,10 @@ def project_list(request):
         for row in my_project_list:
             if row.star:
                 project_dict['star'].append(row)
+
             else:
                 project_dict['my'].append(row)
+
 
         join_project_list = models.ProjectUser.objects.filter(user=request.tracer.user)
         for item in join_project_list:
@@ -38,6 +40,7 @@ def project_list(request):
                 project_dict['star'].append(item.project)
             else:
                 project_dict['join'].append(item.project)
+
 
         form = ProjectModelForm(request)
 
