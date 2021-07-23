@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 # Author:blackfeather
 
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse,redirect
 from django.http import JsonResponse
 
 from web.forms.project import ProjectModelForm
@@ -28,7 +28,7 @@ def project_list(request):
         my_project_list = models.Project.objects.filter(creator=request.tracer.user)
         for row in my_project_list:
             if row.star:
-                project_dict['star'].append(row)
+                project_dict['star'].append({'value':row,'type':'my'})
 
             else:
                 project_dict['my'].append(row)
@@ -37,7 +37,7 @@ def project_list(request):
         join_project_list = models.ProjectUser.objects.filter(user=request.tracer.user)
         for item in join_project_list:
             if item.star:
-                project_dict['star'].append(item.project)
+                project_dict['star'].append({'value':item.project,'type':'join'})
             else:
                 project_dict['join'].append(item.project)
 
@@ -56,3 +56,29 @@ def project_list(request):
         return JsonResponse({'status': True})
 
     return JsonResponse({'status': False, 'error': form.errors})
+
+
+def project_star(request,project_type,project_id):
+    '''星标项目'''
+    if project_type == 'my':
+        models.Project.objects.filter(id = project_id,creator=request.tracer.user).update(star=True)
+        return redirect('project_list')
+
+    if project_type=='join':
+        models.ProjectUser.objects.filter(project_id=project_id,user=request.tracer.user).update(star = True)
+        return redirect('project_list')
+
+    return HttpResponse('请求错误')
+
+
+def project_unstar(request,project_type,project_id):
+    '''取消星标'''
+    if project_type == 'my':
+        models.Project.objects.filter(id = project_id,creator=request.tracer.user).update(star=False)
+        return redirect('project_list')
+
+    if project_type=='join':
+        models.ProjectUser.objects.filter(project_id=project_id,user=request.tracer.user).update(star = False)
+        return redirect('project_list')
+
+    return HttpResponse('请求错误')
