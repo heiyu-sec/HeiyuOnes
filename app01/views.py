@@ -17,7 +17,7 @@ def send_sms(request):
         return HttpResponse('模板不存在')
 
     code = random.randrange(1000,9999)
-    res = send_sms_single('13917754978',template_id,[code,])
+    res = send_sms_single('',template_id,[code,])
     if res['result'] == 0:
         return HttpResponse('成功了')
     else:
